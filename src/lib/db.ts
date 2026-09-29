@@ -1,9 +1,10 @@
 import fs from "fs";
 import path from "path";
+import os from "os";
 import bcrypt from "bcryptjs";
 import { User, Product, InventoryItem, Order, Subscription } from "@/types";
 
-interface DatabaseSchema {
+export interface DatabaseSchema {
   users: User[];
   products: Product[];
   inventory: InventoryItem[];
@@ -11,7 +12,13 @@ interface DatabaseSchema {
   subscriptions: Subscription[];
 }
 
-const DB_FILE_PATH = path.join(process.cwd(), "data", "subvault.json");
+declare global {
+  // eslint-disable-next-line no-var
+  var __subvault_db: DatabaseSchema | undefined;
+}
+
+const PRIMARY_DB_PATH = path.join(process.cwd(), "data", "subvault.json");
+const TMP_DB_PATH = path.join(os.tmpdir(), "subvault.json");
 
 export function cleanEmail(email: string): string {
   if (!email) return "";
@@ -590,25 +597,58 @@ export function getInitialSeed(): DatabaseSchema {
 }
 
 export function readDb(): DatabaseSchema {
-  try {
-    if (!fs.existsSync(DB_FILE_PATH)) {
-      const seed = getInitialSeed();
-      writeDb(seed);
-      return seed;
-    }
-    const data = fs.readFileSync(DB_FILE_PATH, "utf-8");
-    return JSON.parse(data) as DatabaseSchema;
-  } catch (error) {
-    console.error("Error reading db file, falling back to seed:", error);
-    const seed = getInitialSeed();
-    writeDb(seed);
-    return seed;
+  if (globalThis.__subvault_db) {
+    return globalThis.__subvault_db;
   }
+
+  // 1. Try reading from primary local path
+  try {
+    if (fs.existsSync(PRIMARY_DB_PATH)) {
+      const data = fs.readFileSync(PRIMARY_DB_PATH, "utf-8");
+      const parsed = JSON.parse(data) as DatabaseSchema;
+      globalThis.__subvault_db = parsed;
+      return parsed;
+    }
+  } catch (err) {
+    console.warn("Could not read primary DB file:", err);
+  }
+
+  // 2. Try reading from serverless /tmp path (Vercel warm lambda)
+  try {
+    if (fs.existsSync(TMP_DB_PATH)) {
+      const data = fs.readFileSync(TMP_DB_PATH, "utf-8");
+      const parsed = JSON.parse(data) as DatabaseSchema;
+      globalThis.__subvault_db = parsed;
+      return parsed;
+    }
+  } catch (err) {
+    console.warn("Could not read tmp DB file:", err);
+  }
+
+  // 3. Fallback to initial seed
+  const seed = getInitialSeed();
+  globalThis.__subvault_db = seed;
+  writeDb(seed);
+  return seed;
 }
 
 export function writeDb(data: DatabaseSchema): void {
-  ensureDirectoryExistence(DB_FILE_PATH);
-  fs.writeFileSync(DB_FILE_PATH, JSON.stringify(data, null, 2), "utf-8");
+  globalThis.__subvault_db = data;
+
+  // Try writing to local primary path (data/subvault.json)
+  try {
+    ensureDirectoryExistence(PRIMARY_DB_PATH);
+    fs.writeFileSync(PRIMARY_DB_PATH, JSON.stringify(data, null, 2), "utf-8");
+    return;
+  } catch (primaryErr: any) {
+    // If running in a read-only serverless environment like Vercel (EROFS), write to /tmp
+    try {
+      ensureDirectoryExistence(TMP_DB_PATH);
+      fs.writeFileSync(TMP_DB_PATH, JSON.stringify(data, null, 2), "utf-8");
+    } catch (tmpErr) {
+      console.warn("Write to /tmp failed, kept in global memory:", tmpErr);
+    }
+  }
 }
 
 // User Helpers
