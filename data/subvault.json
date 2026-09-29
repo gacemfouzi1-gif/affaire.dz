@@ -1,0 +1,530 @@
+{
+  "users": [
+    {
+      "id": "usr_super_admin",
+      "name": "Fouzi Gacem (Super Admin)",
+      "email": "gacemfouzi1@gmail.com",
+      "passwordHash": "$2b$10$VFl/DlAkbmNXaatJMgXCHOgWW0qukk.Gp/KFay4bKt/oX5C5Npryq",
+      "role": "admin",
+      "createdAt": "2026-09-29T00:18:22.761Z"
+    },
+    {
+      "id": "usr_customer",
+      "name": "Client Démo",
+      "email": "customer@example.com",
+      "passwordHash": "$2b$10$VFl/DlAkbmNXaatJMgXCHOPpSAvFlt65JTxDozy6Lr4EiM55mt8TC",
+      "role": "user",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "prod_gemini_pro",
+      "slug": "google-gemini-pro-18m",
+      "name": "Google Gemini Pro (18 Months)",
+      "category": "AI & Developer",
+      "tagline": "Accès complet aux modèles Gemini 1.5 Pro & Advanced avec fenêtre de contexte 2M tokens.",
+      "description": "Profitez de la puissance de l'IA Google avec Gemini Pro pendant 18 mois. Disponible en pack Principal + 5 membres de la famille, ou en slot individuel Famille avec livraison instantanée.",
+      "features": [
+        "Modèles Google Gemini 1.5 Pro & Advanced illimités",
+        "Fenêtre de contexte ultra-large de 2 Millions de tokens",
+        "Intégration directe Google Workspace, Docs & Drive",
+        "Garantie totale pendant toute la durée de 18 mois",
+        "Livraison automatique instantanée après validation"
+      ],
+      "badge": "Best Seller AI",
+      "icon": "Brain",
+      "color": "from-blue-600 to-indigo-950",
+      "warrantyDays": 540,
+      "rules": [
+        "Invitation sécurisée transmise automatiquement",
+        "Utilisation autorisée sur tous vos appareils"
+      ],
+      "tiers": [
+        {
+          "id": "tier_gemini_main",
+          "durationMonths": 18,
+          "durationLabel": "Main + 5 membres",
+          "price": 3450,
+          "originalPrice": 8500,
+          "popular": true
+        },
+        {
+          "id": "tier_gemini_family",
+          "durationMonths": 18,
+          "durationLabel": "Family Slot",
+          "price": 1000,
+          "originalPrice": 3000,
+          "popular": false
+        }
+      ]
+    },
+    {
+      "id": "prod_canva_edu",
+      "slug": "canva-edu-invite-2y",
+      "name": "Canva Edu Invite (2 years)",
+      "category": "Design & Video",
+      "tagline": "2 années complètes de fonctionnalités Canva Pro débloquées sur votre propre compte.",
+      "description": "Bénéficiez de 2 ans d'accès Canva Éducation avec toutes les fonctionnalités premium : suppression d'arrière-plan en 1 clic, kits de marque, studio magique IA et millions de modèles.",
+      "features": [
+        "100+ millions de photos, vidéos et éléments graphiques premium",
+        "Effaceur d'arrière-plan et Studio Magique IA illimités",
+        "Kits de marque avec polices et logos personnalisés",
+        "Activation directe par invitation sur votre propre email",
+        "Garantie intégrale de 2 ans (730 jours)"
+      ],
+      "badge": "Top Creative",
+      "icon": "Palette",
+      "color": "from-cyan-600 to-sky-950",
+      "warrantyDays": 730,
+      "rules": [
+        "Compatible avec tout compte Canva existant ou nouveau",
+        "Conservez tous vos designs personnels en toute sécurité"
+      ],
+      "tiers": [
+        {
+          "id": "tier_canva_2y",
+          "durationMonths": 24,
+          "durationLabel": "2 Years",
+          "price": 3500,
+          "originalPrice": 7000,
+          "popular": true
+        }
+      ]
+    },
+    {
+      "id": "prod_capcut_pro",
+      "slug": "capcut-pro-30d",
+      "name": "CapCut Pro 30 Days (Full Warranty)",
+      "category": "Design & Video",
+      "tagline": "Outils de montage vidéo professionnels, effets exclusifs et export 4K 60fps.",
+      "description": "Débloquez l'intégralité des outils CapCut Pro pour créer des vidéos virales sur TikTok, Reels et YouTube. Comprend le sous-titrage automatique IA, les transitions pro et l'exportation haute définition.",
+      "features": [
+        "Tous les effets, filtres et transitions Pro déverrouillés",
+        "Exportation Ultra HD 4K à 60 images/seconde sans filigrane",
+        "Génération automatique de sous-titres IA multilingues",
+        "Espace de stockage Cloud sécurisé inclus",
+        "Garantie complète 30 jours avec remplacement immédiat"
+      ],
+      "badge": "Trending Video",
+      "icon": "Video",
+      "color": "from-zinc-800 to-neutral-950",
+      "warrantyDays": 30,
+      "rules": [
+        "Identifiants de connexion privés fournis immédiatement",
+        "Fonctionne sur PC, Mac, iPhone et Android"
+      ],
+      "tiers": [
+        {
+          "id": "tier_capcut_30d",
+          "durationMonths": 1,
+          "durationLabel": "30 Days",
+          "price": 4000,
+          "originalPrice": 6500,
+          "popular": true
+        }
+      ]
+    },
+    {
+      "id": "prod_spotify_premium",
+      "slug": "spotify-premium-3m",
+      "name": "Spotify Premium (3 Months)",
+      "category": "Streaming",
+      "tagline": "Musique sans aucune publicité, sauts illimités et téléchargements hors-ligne.",
+      "description": "Écoutez des millions de titres musicaux et podcasts en qualité sonore maximale sans interruption publicitaire. Téléchargez vos playlists favorites pour une écoute sans connexion.",
+      "features": [
+        "Écoute 100% sans publicité et sans coupure",
+        "Téléchargement illimité pour une écoute hors-ligne",
+        "Qualité audio maximale (Très Haute Qualité / Hi-Fi)",
+        "Zapping et sauts de titres illimités",
+        "Garantie active 3 mois avec support réactif"
+      ],
+      "badge": "Musique Hi-Fi",
+      "icon": "Radio",
+      "color": "from-emerald-600 to-teal-950",
+      "warrantyDays": 90,
+      "rules": [
+        "Activation rapide via lien d'invitation officiel",
+        "Fonctionne mondialement sans avoir besoin de VPN"
+      ],
+      "tiers": [
+        {
+          "id": "tier_spotify_3m",
+          "durationMonths": 3,
+          "durationLabel": "3 Months",
+          "price": 1200,
+          "originalPrice": 2400,
+          "popular": true
+        }
+      ]
+    },
+    {
+      "id": "prod_microsoft_365",
+      "slug": "microsoft-365-12m",
+      "name": "Microsoft 365 (12 Months)",
+      "category": "Productivity",
+      "tagline": "Suite Office complète (Word, Excel, PowerPoint) avec 1TB de stockage Cloud OneDrive.",
+      "description": "La référence bureautique pour étudiants, professionnels et entreprises. Installez les applications officielles Office sur votre PC, Mac, tablette et smartphone avec 1TB de Cloud personnel.",
+      "features": [
+        "Applications Word, Excel, PowerPoint, Outlook et OneNote",
+        "1TB d'espace de stockage cloud ultra-sécurisé OneDrive",
+        "Installation sur jusqu'à 5 appareils simultanés",
+        "Mises à jour de sécurité et nouvelles fonctionnalités en continu",
+        "Garantie 12 mois complets assurée"
+      ],
+      "badge": "Essentiel Bureau",
+      "icon": "Layers",
+      "color": "from-blue-700 to-indigo-950",
+      "warrantyDays": 365,
+      "rules": [
+        "Compte personnel fourni ou activation sur adresse dédiée",
+        "Compatible Windows 10/11, macOS, iOS et Android"
+      ],
+      "tiers": [
+        {
+          "id": "tier_m365_12m",
+          "durationMonths": 12,
+          "durationLabel": "12 Months",
+          "price": 4000,
+          "originalPrice": 9000,
+          "popular": true
+        }
+      ]
+    },
+    {
+      "id": "prod_duolingo",
+      "slug": "duolingo-1y",
+      "name": "Duolingo (1 Year)",
+      "category": "Education & Learning",
+      "tagline": "Abonnement Super Duolingo : vies illimitées, zéro publicité et révision des erreurs.",
+      "description": "Apprenez l'anglais, l'espagnol, le français, l'allemand et plus de 40 langues sans frustration grâce à Super Duolingo. Progressez à votre rythme sans jamais être bloqué par les cœurs.",
+      "features": [
+        "Vies et cœurs illimités pour un apprentissage sans interruption",
+        "Zéro coupure publicitaire entre les leçons",
+        "Espace d'entraînement sur-mesure pour corriger vos erreurs",
+        "Défis de maîtrise légendaire débloqués gratuitement",
+        "Garantie 1 an d'accès ininterrompu"
+      ],
+      "badge": "Apprentissage",
+      "icon": "BookOpen",
+      "color": "from-lime-600 to-emerald-950",
+      "warrantyDays": 365,
+      "rules": [
+        "Activation directe sur votre profil Duolingo personnel"
+      ],
+      "tiers": [
+        {
+          "id": "tier_duolingo_1y",
+          "durationMonths": 12,
+          "durationLabel": "1 Year",
+          "price": 1500,
+          "originalPrice": 3500,
+          "popular": true
+        }
+      ]
+    },
+    {
+      "id": "prod_apple_music",
+      "slug": "apple-music-5m",
+      "name": "Apple Music (5 Months)",
+      "category": "Streaming",
+      "tagline": "Audio spatial avec Dolby Atmos, streaming sans perte (Lossless) et 100M de chansons.",
+      "description": "Plongez dans un son immersif avec Apple Music. Profitez de l'audio spatial Dolby Atmos, de la qualité sans perte Hi-Res Lossless, de paroles en temps réel et d'une compatibilité tous appareils.",
+      "features": [
+        "Catalogue de plus de 100 millions de morceaux en haute résolution",
+        "Audio Spatial immersif avec technologie Dolby Atmos",
+        "Affichage des paroles en direct et mode karaoké",
+        "Compatible iPhone, iPad, Mac, Android et PC Windows",
+        "Garantie intégrale de 5 mois"
+      ],
+      "badge": "Son Spatial",
+      "icon": "Music",
+      "color": "from-rose-600 to-red-950",
+      "warrantyDays": 150,
+      "rules": [
+        "Activation officielle transmise immédiatement"
+      ],
+      "tiers": [
+        {
+          "id": "tier_apple_music_5m",
+          "durationMonths": 5,
+          "durationLabel": "5 Months",
+          "price": 4000,
+          "originalPrice": 7500,
+          "popular": true
+        }
+      ]
+    },
+    {
+      "id": "prod_notion_plus",
+      "slug": "notion-plus-12m",
+      "name": "Notion Plus (12 Months)",
+      "category": "Productivity",
+      "tagline": "Espace de travail tout-en-un avec blocs et téléversements de fichiers illimités.",
+      "description": "Organisez vos notes, projets, cours et bases de données sans aucune limite. Notion Plus offre des téléversements infinis de fichiers, un historique de révision de 30 jours et la collaboration d'équipe.",
+      "features": [
+        "Pages et blocs de contenu totalement illimités",
+        "Téléversement de fichiers volumineux sans restriction de taille",
+        "Historique des versions de vos pages sur 30 jours",
+        "Invitation jusqu'à 100 invités et collaborateurs",
+        "Garantie active pendant 12 mois complets"
+      ],
+      "badge": "Organisation Pro",
+      "icon": "FileText",
+      "color": "from-stone-700 to-zinc-950",
+      "warrantyDays": 365,
+      "rules": [
+        "Activation sécurisée sur votre espace Notion"
+      ],
+      "tiers": [
+        {
+          "id": "tier_notion_12m",
+          "durationMonths": 12,
+          "durationLabel": "12 Months",
+          "price": 2500,
+          "originalPrice": 6000,
+          "popular": true
+        }
+      ]
+    },
+    {
+      "id": "prod_autodesk",
+      "slug": "autodesk-12m",
+      "name": "Autodesk 12 months",
+      "category": "Productivity",
+      "tagline": "Licence complète AutoCAD, Revit, 3ds Max, Maya et Inventor pour 12 mois.",
+      "description": "Accédez à la gamme complète des logiciels de modélisation 3D, d'architecture et de conception d'ingénierie Autodesk. Licence officielle activée directement sur votre adresse email personnelle.",
+      "features": [
+        "Accès à AutoCAD, Revit, 3ds Max, Maya et Inventor",
+        "Activation officielle directe sur votre compte Autodesk",
+        "Rendu cloud et outils de collaboration en ligne inclus",
+        "Mises à jour officielles des logiciels pendant 1 an",
+        "Garantie 12 mois avec assistance technique dédiée"
+      ],
+      "badge": "Ingénierie & 3D",
+      "icon": "Box",
+      "color": "from-amber-600 to-yellow-950",
+      "warrantyDays": 365,
+      "rules": [
+        "Fournissez votre adresse email Autodesk pour une liaison instantanée"
+      ],
+      "tiers": [
+        {
+          "id": "tier_autodesk_12m",
+          "durationMonths": 12,
+          "durationLabel": "12 Months",
+          "price": 1200,
+          "originalPrice": 4500,
+          "popular": true
+        }
+      ]
+    },
+    {
+      "id": "prod_figma_pro",
+      "slug": "figma-pro-edu-1y",
+      "name": "Figma Pro Education 1 Year",
+      "category": "Design & Video",
+      "tagline": "Figma Professional & FigJam avec fichiers illimités et bibliothèques d'équipe.",
+      "description": "Le standard mondial de l'UI/UX design. Créez des maquettes d'applications et sites web avec projets illimités, historique de révision infini, Mode Développeur et tableaux blancs collaboratifs FigJam.",
+      "features": [
+        "Fichiers Figma et projets d'équipe en nombre illimité",
+        "Historique complet des révisions sans aucune limite de temps",
+        "Bibliothèques de composants partagés et styles d'équipe",
+        "Accès complet au Dev Mode pour inspecter le code",
+        "Garantie 1 an d'activation sans interruption"
+      ],
+      "badge": "UI/UX Standard",
+      "icon": "Layout",
+      "color": "from-purple-600 to-indigo-950",
+      "warrantyDays": 365,
+      "rules": [
+        "Activation officielle via invitation d'équipe sur votre compte Figma"
+      ],
+      "tiers": [
+        {
+          "id": "tier_figma_1y",
+          "durationMonths": 12,
+          "durationLabel": "1 Year",
+          "price": 3500,
+          "originalPrice": 8000,
+          "popular": true
+        }
+      ]
+    }
+  ],
+  "inventory": [
+    {
+      "id": "inv_gem_main_1",
+      "productId": "prod_gemini_pro",
+      "tierId": "tier_gemini_main",
+      "accountEmail": "gemini_workspace_master@subvault-cloud.com",
+      "accountPassword": "GeminiMatrix2026!",
+      "additionalInfo": "Compte Principal Administrateur + 5 slots membres activables",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_gem_main_2",
+      "productId": "prod_gemini_pro",
+      "tierId": "tier_gemini_main",
+      "accountEmail": "gemini_pro_enterprise@subvault-cloud.com",
+      "accountPassword": "UltraAI9928!",
+      "additionalInfo": "Pack 18 Mois Google Gemini 1.5 Pro | 5 invitations prêtes",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_gem_fam_1",
+      "productId": "prod_gemini_pro",
+      "tierId": "tier_gemini_family",
+      "accountEmail": "gemini_family_slot1@subvault.io",
+      "accountPassword": "NeuralSlot#481",
+      "additionalInfo": "Lien d'invitation famille Gemini Pro 18 Mois | Slot dédié",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_gem_fam_2",
+      "productId": "prod_gemini_pro",
+      "tierId": "tier_gemini_family",
+      "accountEmail": "gemini_family_slot2@subvault.io",
+      "accountPassword": "NeuralSlot#992",
+      "additionalInfo": "Slot Famille Google Gemini Pro 18 Mois avec accès 2M tokens",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_canva_1",
+      "productId": "prod_canva_edu",
+      "tierId": "tier_canva_2y",
+      "accountEmail": "canva_edu_invite_hub@subvault.io",
+      "accountPassword": "DesignEdu992!",
+      "additionalInfo": "Lien d'invitation 2 Ans : https://www.canva.com/brand/join?invite=subvault-edu-2026",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_canva_2",
+      "productId": "prod_canva_edu",
+      "tierId": "tier_canva_2y",
+      "accountEmail": "canva_edu_pro_seat@subvault.io",
+      "accountPassword": "VectorMagic2026#",
+      "additionalInfo": "Lien d'invitation direct 2 Ans Canva Edu avec Magic Studio débloqué",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_capcut_1",
+      "productId": "prod_capcut_pro",
+      "tierId": "tier_capcut_30d",
+      "accountEmail": "capcut_vip_studio@subvault.io",
+      "accountPassword": "Render4K_2026!",
+      "additionalInfo": "Compte direct CapCut Pro 30 Jours | Garantie totale 30j",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_capcut_2",
+      "productId": "prod_capcut_pro",
+      "tierId": "tier_capcut_30d",
+      "accountEmail": "capcut_creator_pro@subvault.io",
+      "accountPassword": "TimelineFast99#",
+      "additionalInfo": "Compte Pro CapCut complet multi-plateformes PC/Mac/Mobile",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_spotify_1",
+      "productId": "prod_spotify_premium",
+      "tierId": "tier_spotify_3m",
+      "accountEmail": "spotify_stream_hq1@subvault.io",
+      "accountPassword": "AudioDrop2026!",
+      "additionalInfo": "Lien d'invitation Spotify Premium 3 Mois sans coupure",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_spotify_2",
+      "productId": "prod_spotify_premium",
+      "tierId": "tier_spotify_3m",
+      "accountEmail": "spotify_stream_hq2@subvault.io",
+      "accountPassword": "BeatMaster881!",
+      "additionalInfo": "Slot Famille Spotify 3 Mois qualité Hi-Fi",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_m365_1",
+      "productId": "prod_microsoft_365",
+      "tierId": "tier_m365_12m",
+      "accountEmail": "office365_sub_enterprise1@subvault.io",
+      "accountPassword": "CloudDrive_OneDrive2026!",
+      "additionalInfo": "Compte Microsoft 365 12 Mois avec 1TB - 5TB Cloud OneDrive",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_m365_2",
+      "productId": "prod_microsoft_365",
+      "tierId": "tier_m365_12m",
+      "accountEmail": "office365_sub_enterprise2@subvault.io",
+      "accountPassword": "WordExcelPowerPoint99#",
+      "additionalInfo": "Suite Office 365 officielle 12 Mois pour 5 appareils",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_duo_1",
+      "productId": "prod_duolingo",
+      "tierId": "tier_duolingo_1y",
+      "accountEmail": "duolingo_super_seat1@subvault.io",
+      "accountPassword": "Polyglot2026!",
+      "additionalInfo": "Invitation Super Duolingo 1 An (vies illimitées sans pub)",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_apple_1",
+      "productId": "prod_apple_music",
+      "tierId": "tier_apple_music_5m",
+      "accountEmail": "apple_music_hifi1@subvault.io",
+      "accountPassword": "DolbySpatial2026!",
+      "additionalInfo": "Abonnement Apple Music 5 Mois Spatial Audio débloqué",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_notion_1",
+      "productId": "prod_notion_plus",
+      "tierId": "tier_notion_12m",
+      "accountEmail": "notion_workspace_pro1@subvault.io",
+      "accountPassword": "OrganizeMaster2026!",
+      "additionalInfo": "Espace Notion Plus 12 Mois Blocs & Fichiers illimités",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_autodesk_1",
+      "productId": "prod_autodesk",
+      "tierId": "tier_autodesk_12m",
+      "accountEmail": "autodesk_license_key1@subvault.io",
+      "accountPassword": "AutoCAD_Revit2026!",
+      "licenseKey": "ADSK-2026-AUTOCAD-REVIT-ULTIMATE",
+      "additionalInfo": "Licence officielle Autodesk 12 Mois (AutoCAD, Revit, Maya, 3ds Max)",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    },
+    {
+      "id": "inv_figma_1",
+      "productId": "prod_figma_pro",
+      "tierId": "tier_figma_1y",
+      "accountEmail": "figma_team_seat1@subvault.io",
+      "accountPassword": "FigmaDesignTeam2026!",
+      "additionalInfo": "Invitation Équipe Figma Pro Education 1 An avec Dev Mode et FigJam",
+      "status": "available",
+      "createdAt": "2026-09-29T00:18:22.765Z"
+    }
+  ],
+  "orders": [],
+  "subscriptions": []
+}
