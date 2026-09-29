@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "push:github": "node scripts/push_to_github.js"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.6",
