@@ -820,9 +820,78 @@ export function getUserOrders(userId: string): Order[] {
   return db.orders.filter((o) => o.userId === userId);
 }
 
+export function getAllOrders(): Order[] {
+  const db = readDb();
+  return db.orders;
+}
+
 export function getOrderById(orderId: string): Order | undefined {
   const db = readDb();
   return db.orders.find((o) => o.id === orderId);
+}
+
+export function updateOrder(orderId: string, updates: Partial<Order>): Order | undefined {
+  const db = readDb();
+  const orderIndex = db.orders.findIndex((o) => o.id === orderId);
+  if (orderIndex === -1) return undefined;
+  db.orders[orderIndex] = { ...db.orders[orderIndex], ...updates };
+  writeDb(db);
+  return db.orders[orderIndex];
+}
+
+export function approveOrder(orderId: string): { order: Order; subscriptions: Subscription[] } | undefined {
+  const db = readDb();
+  const order = db.orders.find((o) => o.id === orderId);
+  if (!order) return undefined;
+
+  order.status = "completed";
+  order.paymentStatus = "verified";
+
+  // Activate any pending subscriptions associated with this order
+  const updatedSubs: Subscription[] = [];
+  db.subscriptions.forEach((sub) => {
+    if (sub.orderId === orderId || (sub.userId === order.userId && sub.status === "pending_activation")) {
+      sub.status = "active";
+      updatedSubs.push(sub);
+    }
+  });
+
+  writeDb(db);
+  return { order, subscriptions: updatedSubs };
+}
+
+export function rejectOrder(orderId: string): { order: Order; subscriptions: Subscription[] } | undefined {
+  const db = readDb();
+  const order = db.orders.find((o) => o.id === orderId);
+  if (!order) return undefined;
+
+  order.status = "refunded";
+  order.paymentStatus = "rejected";
+
+  // Revoke subscriptions associated with this order
+  const revokedSubs: Subscription[] = [];
+  db.subscriptions.forEach((sub) => {
+    if (sub.orderId === orderId) {
+      sub.status = "revoked";
+      revokedSubs.push(sub);
+    }
+  });
+
+  // Reclaim assigned inventory items back to available stock
+  order.items.forEach((item) => {
+    if (item.inventoryItemId) {
+      const invItem = db.inventory.find((inv) => inv.id === item.inventoryItemId);
+      if (invItem && invItem.status === "assigned") {
+        invItem.status = "available";
+        invItem.assignedToOrderId = undefined;
+        invItem.assignedToUserId = undefined;
+        invItem.assignedAt = undefined;
+      }
+    }
+  });
+
+  writeDb(db);
+  return { order, subscriptions: revokedSubs };
 }
 
 export function createSubscription(
@@ -875,13 +944,17 @@ export function getAdminStats() {
   const activeSubscriptions = db.subscriptions.filter((s) => s.status === "active").length;
   const availableStock = db.inventory.filter((inv) => inv.status === "available").length;
   const totalCustomers = db.users.filter((u) => u.role === "user").length;
+  const pendingVerificationCount = db.orders.filter(
+    (o) => o.status === "pending_verification" || o.paymentStatus === "pending_review"
+  ).length;
 
   return {
     totalRevenue,
     activeSubscriptions,
     availableStock,
     totalCustomers,
-    recentOrders: db.orders.slice(0, 10),
+    pendingVerificationCount,
+    recentOrders: db.orders.slice(0, 50),
     inventorySummary: db.products.map((p) => {
       const stock = db.inventory.filter(
         (inv) => inv.productId === p.id && inv.status === "available"

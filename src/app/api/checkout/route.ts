@@ -8,11 +8,27 @@ import { CartItem } from "@/types";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { items, paymentMethod, guestEmail, guestName, promoCode } = body;
+    const { 
+      items, 
+      paymentMethod, 
+      guestEmail, 
+      guestName, 
+      promoCode,
+      paymentProofRef,
+      paymentSenderInfo,
+      paymentNotes,
+    } = body;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return NextResponse.json(
         { error: "Cart is empty" },
+        { status: 400 }
+      );
+    }
+
+    if (["baridimob", "ccp", "binance"].includes(paymentMethod) && (!paymentProofRef || !paymentProofRef.trim())) {
+      return NextResponse.json(
+        { error: "Veuillez renseigner le numéro de transaction, le reçu ou le TxID de votre paiement." },
         { status: 400 }
       );
     }
@@ -66,7 +82,7 @@ export async function POST(request: Request) {
     const total = Number(Math.max(0, subtotal - discount).toFixed(2));
     const mockPaymentId = `pi_${paymentMethod}_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
 
-    // Execute automated vault allocation and instant delivery
+    // Execute automated vault allocation and delivery
     const deliveryResult = await processAutomatedDelivery({
       userId: user.id,
       userEmail: user.email,
@@ -75,8 +91,11 @@ export async function POST(request: Request) {
       subtotal,
       discount,
       total,
-      paymentMethod: paymentMethod || "card",
+      paymentMethod: paymentMethod || "baridimob",
       paymentId: mockPaymentId,
+      paymentProofRef: paymentProofRef?.trim(),
+      paymentSenderInfo: paymentSenderInfo?.trim(),
+      paymentNotes: paymentNotes?.trim(),
     });
 
     return NextResponse.json({
@@ -84,6 +103,7 @@ export async function POST(request: Request) {
       order: deliveryResult.order,
       credentials: deliveryResult.allocatedCredentials,
       emailSentTo: deliveryResult.emailSentTo,
+      isPendingVerification: deliveryResult.isPendingVerification,
     });
   } catch (error) {
     console.error("Checkout processing error:", error);

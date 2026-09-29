@@ -1,4 +1,4 @@
-import { CartItem, Order, Subscription, InventoryItem } from "@/types";
+import { CartItem, Order, Subscription, InventoryItem, PaymentMethod, OrderStatus, SubscriptionStatus } from "@/types";
 import { 
   getAvailableInventoryItem, 
   assignInventoryItem, 
@@ -21,6 +21,7 @@ export interface DeliveryResult {
     warrantyUntil: string;
   }[];
   emailSentTo: string;
+  isPendingVerification: boolean;
 }
 
 export async function processAutomatedDelivery(params: {
@@ -31,8 +32,11 @@ export async function processAutomatedDelivery(params: {
   subtotal: number;
   discount: number;
   total: number;
-  paymentMethod: "card" | "crypto" | "applepay";
+  paymentMethod: PaymentMethod;
   paymentId: string;
+  paymentProofRef?: string;
+  paymentSenderInfo?: string;
+  paymentNotes?: string;
 }): Promise<DeliveryResult> {
   const {
     userId,
@@ -44,7 +48,15 @@ export async function processAutomatedDelivery(params: {
     total,
     paymentMethod,
     paymentId,
+    paymentProofRef,
+    paymentSenderInfo,
+    paymentNotes,
   } = params;
+
+  const isManual = paymentMethod === "baridimob" || paymentMethod === "ccp" || paymentMethod === "binance";
+  const orderStatus: OrderStatus = isManual ? "pending_verification" : "completed";
+  const paymentStatus = isManual ? "pending_review" : "verified";
+  const subStatus: SubscriptionStatus = isManual ? "pending_activation" : "active";
 
   const now = new Date();
   const orderItemsWithCredentials: Order["items"] = [];
@@ -123,7 +135,7 @@ export async function processAutomatedDelivery(params: {
         accountPassword,
         additionalInfo,
         licenseKey,
-        status: "active",
+        status: subStatus,
         autoRenew: true,
         startDate: now.toISOString(),
         expiresAt: expiryDate.toISOString(),
@@ -157,12 +169,22 @@ export async function processAutomatedDelivery(params: {
     total,
     paymentMethod,
     paymentId,
-    status: "completed",
+    paymentProofRef,
+    paymentSenderInfo,
+    paymentNotes,
+    paymentStatus,
+    status: orderStatus,
+  });
+
+  // Link created subscriptions to the final order ID
+  createdSubscriptions.forEach((s) => {
+    s.orderId = finalOrder.id;
   });
 
   return {
     order: finalOrder,
     allocatedCredentials,
     emailSentTo: userEmail,
+    isPendingVerification: isManual,
   };
 }

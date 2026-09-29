@@ -58,7 +58,7 @@ export interface InventoryItem {
   createdAt: string;
 }
 
-export type SubscriptionStatus = "active" | "expiring_soon" | "expired" | "revoked";
+export type SubscriptionStatus = "active" | "pending_activation" | "expiring_soon" | "expired" | "revoked";
 
 export interface Subscription {
   id: string;
@@ -81,7 +81,15 @@ export interface Subscription {
   warrantyUntil: string;
 }
 
-export type OrderStatus = "completed" | "processing" | "refunded";
+export type OrderStatus = "completed" | "processing" | "pending_verification" | "refunded";
+
+export type PaymentMethod = 
+  | "baridimob" 
+  | "ccp" 
+  | "binance" 
+  | "card" 
+  | "crypto" 
+  | "applepay";
 
 export interface OrderItem {
   productId: string;
@@ -105,8 +113,12 @@ export interface Order {
   subtotal: number;
   discount: number;
   total: number;
-  paymentMethod: "card" | "crypto" | "applepay";
+  paymentMethod: PaymentMethod;
   paymentId: string;
+  paymentProofRef?: string;
+  paymentSenderInfo?: string;
+  paymentStatus?: "pending_review" | "verified" | "rejected";
+  paymentNotes?: string;
   status: OrderStatus;
   createdAt: string;
 }

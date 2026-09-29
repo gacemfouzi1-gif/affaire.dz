@@ -575,44 +575,67 @@ export default function DashboardPage() {
                 No previous order transactions found.
               </div>
             ) : (
-              orders.map((ord) => (
-                <div key={ord.id} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-bold text-cyan-400">
-                        #{ord.id}
-                      </span>
-                      <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/30 uppercase font-mono">
-                        {ord.status}
-                      </span>
+              orders.map((ord) => {
+                const isPending = ord.status === "pending_verification" || ord.paymentStatus === "pending_review";
+                return (
+                  <div key={ord.id} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="space-y-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="font-mono text-xs font-bold text-cyan-400">
+                          #{ord.id}
+                        </span>
+                        <span
+                          className={`text-[10px] px-2 py-0.5 rounded font-mono uppercase font-bold ${
+                            isPending
+                              ? "bg-amber-950 text-amber-300 border border-amber-500/30 animate-pulse"
+                              : "bg-emerald-950 text-emerald-400 border border-emerald-500/30"
+                          }`}
+                        >
+                          {isPending ? "En attente de vérification" : ord.status}
+                        </span>
+                        <span className="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">
+                          {ord.paymentMethod === "baridimob"
+                            ? "BaridiMob RIP"
+                            : ord.paymentMethod === "ccp"
+                            ? "CCP Poste"
+                            : ord.paymentMethod === "binance"
+                            ? "Binance USDT"
+                            : ord.paymentMethod.toUpperCase()}
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-300">
+                        {ord.items.map((i) => `${i.productName} (${i.durationLabel})`).join(", ")}
+                      </p>
+                      {ord.paymentProofRef && (
+                        <p className="text-[11px] text-amber-300/90 font-mono">
+                          Réf soumise : {ord.paymentProofRef}
+                        </p>
+                      )}
+                      <p className="text-[11px] text-slate-500 font-mono">
+                        {new Date(ord.createdAt).toLocaleString()}
+                      </p>
                     </div>
-                    <p className="text-xs text-slate-300">
-                      {ord.items.map((i) => `${i.productName} (${i.durationLabel})`).join(", ")}
-                    </p>
-                    <p className="text-[11px] text-slate-500 font-mono">
-                      {new Date(ord.createdAt).toLocaleString()} • Paid via {ord.paymentMethod.toUpperCase()}
-                    </p>
-                  </div>
 
-                  <div className="flex items-center gap-4">
-                    <div className="text-right">
-                      <span className="text-sm font-bold font-mono text-white block">
-                        {formatCurrency(ord.total)}
-                      </span>
-                      <span className="text-[10px] text-emerald-400 font-mono">
-                        Livraison Automatique
-                      </span>
+                    <div className="flex items-center gap-4">
+                      <div className="text-right">
+                        <span className="text-sm font-bold font-mono text-white block">
+                          {formatCurrency(ord.total)}
+                        </span>
+                        <span className="text-[10px] text-cyan-400 font-mono">
+                          {isPending ? "Validation sous 5-15 min" : "Livraison Validée"}
+                        </span>
+                      </div>
+
+                      <Link
+                        href={`/order-success/${ord.id}`}
+                        className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 hover:text-white border border-white/10"
+                      >
+                        Détails commande
+                      </Link>
                     </div>
-
-                    <Link
-                      href={`/order-success/${ord.id}`}
-                      className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 hover:text-white border border-white/10"
-                    >
-                      View Credentials
-                    </Link>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         </div>
